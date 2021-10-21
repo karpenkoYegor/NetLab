@@ -37,8 +37,6 @@ namespace Task_5
                     }
                     currentStep = steps;
                 }
-
-                Console.WriteLine(i);
             }
 
             for (int a = 0; a < N; a++)
