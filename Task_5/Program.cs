@@ -15,7 +15,6 @@ namespace Task_5
             int steps = N-1;
             int currentStep = steps;
             int count = 0;
-            
 
             for (int i = 1; i <= N*N; i++)
             {
