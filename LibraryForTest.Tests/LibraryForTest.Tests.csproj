@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LibraryForTest3\LibraryForTest.csproj" />
+    <ProjectReference Include="..\LibraryForTest\LibraryForTest.csproj" />
   </ItemGroup>
 
 </Project>
