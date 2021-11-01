@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace LibraryForTest.Tests
 {
-    class UnitTask1
+    class UnitTest1
     {
         [Test]
         public void TestTask5_SumOfMultiplesOf3Or5_ReturnInt()
