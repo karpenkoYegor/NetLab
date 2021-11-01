@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Task_2
+namespace LibraryForTest
 {
-    internal class Program
+    public class TestTask2
     {
-        static void Main(string[] args)
+        public string NumericOfString(string inputString)
         {
-            Console.WriteLine("Введите строку");
-            string inputString = Console.ReadLine();
             Dictionary<char, int> dict = new Dictionary<char, int>();
+            var result = "";
             foreach (char c in inputString)
             {
                 if (dict.ContainsKey(c))
@@ -20,8 +22,10 @@ namespace Task_2
                 {
                     dict.Add(c, 1);
                 }
-                Console.Write(dict[c]);
+                result += dict[c];
             }
+
+            return result;
         }
     }
 }

@@ -1,24 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Task_5
+namespace LibraryForTest
 {
-    internal class Program
+    public class TestTask5
     {
-        static void Main(string[] args)
-        {
-            int N = Convert.ToInt32(Console.ReadLine());
-            int[,] array = spiralMatrix(N);
-            for (int a = 0; a < N; a++)
-            {
-                for (int j = 0; j < N; j++)
-                {
-                    Console.Write($"{array[a, j],3}");
-                }
-                Console.WriteLine();
-            }
-        }
-
-        static int[,] spiralMatrix(int N)
+        public int[,] spiralMatrix(int N)
         {
             if (N > 0)
             {
