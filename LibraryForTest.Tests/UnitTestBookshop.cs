@@ -7,8 +7,8 @@ namespace LibraryForTest.Tests
         [Test]
         public void BookShop_FinalCost_ReturnDouble()
         {
-            var expected = 92.0;
-            var countOfBook = new int[] { 0, 5, 3, 4, 1 };
+            var expected = 51.6;
+            var countOfBook = new int[] { 2, 2, 2, 1, 1 };
             var bookShop = new BookShop(countOfBook);
 
             var costOfBook = bookShop.FinalCost();
