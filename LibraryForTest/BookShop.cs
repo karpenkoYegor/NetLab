@@ -4,7 +4,6 @@
     {
         private int[] _purchasedBooks;
         private int _costOfBook = 8;
-        private int _minDiscount = 5;
         public BookShop(int[] purchasedBooks)
         {
             _purchasedBooks = purchasedBooks;
@@ -45,7 +44,7 @@
                         discount = 0.75;
                         break;
                 }
-                finalCost += 8 * countOfBook * discount;
+                finalCost += _costOfBook * countOfBook * discount;
             }
 
             return finalCost;
