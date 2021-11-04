@@ -10,14 +10,17 @@ namespace BankSystem
             Entrepreneur,
             VIP
         }
-
+        
         private double _balance;
-        private TypeOfAccount _typeOfAccount;
+        public TypeOfAccount Account;
         private double _maxWithdrawar = 500;
         private string _ssnNumber;
-        public string _firstName;
-        public string _lastName;
+        private string _firstName;
+        private string _lastName;
 
+        private string _logMessage;
+        
+        public CreditCard Card { get; private set; } = null;
         public double Balance
         {
             get
@@ -54,9 +57,11 @@ namespace BankSystem
         public BankAccount(string firstName, string lastName, double balance, TypeOfAccount typeOfAccount)
         {
             _balance = balance;
-            _typeOfAccount = typeOfAccount;
+            Account = typeOfAccount;
             FirstName = firstName;
             LastName = lastName;
+            _ssnNumber =
+                $"{new Random().Next(100, 999)} - {new Random().Next(10, 99)} - {new Random().Next(1000, 9999)}";
         }
 
         public void Add(double amount)
@@ -67,6 +72,7 @@ namespace BankSystem
             }
 
             _balance += amount;
+            _logMessage += $"User {FirstName} {LastName} {_ssnNumber} added {amount}$ balance equal {Balance}\n";
         }
 
         public void TransferMoneyTo(IAccount otherAccount, double amount)
@@ -75,9 +81,10 @@ namespace BankSystem
             {
                 throw new NullReferenceException(nameof(amount));
             }
-
+            
             Withdraw(amount);
             otherAccount.Add(amount);
+            _logMessage += $"User {FirstName} {LastName} {_ssnNumber} transfer {amount}$ to {otherAccount.FirstName} {otherAccount.LastName} balance equal {Balance}\n";
         }
 
         public void Withdraw(double amount)
@@ -87,19 +94,27 @@ namespace BankSystem
                 throw new ArgumentOutOfRangeException(nameof(amount));
             }
 
-            if (_typeOfAccount == TypeOfAccount.Ordinary && amount > 500)
+            if (Account == TypeOfAccount.Ordinary && amount > _maxWithdrawar)
             {
                 amount = _maxWithdrawar;
             }
             _balance -= amount;
+            _logMessage += $"User {FirstName} {LastName} {_ssnNumber} added {amount}$ balance equal {Balance}\n";
         }
-
+        public void TakeACredit()
+        {
+            if (Card is null)
+            {
+                Card = CreditDepartment.PermissionToIssueACard(this);
+            }
+        }
         public void ShowInfo()
         {
             Console.WriteLine($"First name - {FirstName}");
             Console.WriteLine($"Last name - {LastName}");
             Console.WriteLine($"Balance - {Balance}");
             Console.WriteLine($"SSN number - {_ssnNumber}");
+            Logger.Log(_logMessage);
         }
     }
 }

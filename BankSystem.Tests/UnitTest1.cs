@@ -114,5 +114,27 @@ namespace BankSystem.Tests
 
             account.ShowInfo();
         }
+        [Fact]
+        public void TakeACredit_CreditCardIsNotNull_InicializeCard()
+        {
+            double currentBalance = 10.0;
+            BankAccount account = new BankAccount("Yegor", "Karpenko", currentBalance, BankAccount.TypeOfAccount.Ordinary);
+            account.TakeACredit();
+
+            var expected = account.Card;
+            
+            Assert.NotEqual(expected, null);
+        }
+        [Fact]
+        public void TakeACredit_CurrentBalanceMoreThan200_InicializeCard()
+        {
+            double currentBalance = 500.0;
+            BankAccount account = new BankAccount("Yegor", "Karpenko", currentBalance, BankAccount.TypeOfAccount.Ordinary);
+            account.TakeACredit();
+
+            CreditCard expected = null;
+            
+            Assert.Equal(expected, account.Card);
+        }
     }
 }
