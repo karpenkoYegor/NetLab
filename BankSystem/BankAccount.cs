@@ -99,14 +99,32 @@ namespace BankSystem
                 amount = _maxWithdrawar;
             }
             _balance -= amount;
-            _logMessage += $"User {FirstName} {LastName} {_ssnNumber} added {amount}$ balance equal {Balance}\n";
+            _logMessage += $"User {FirstName} {LastName} {_ssnNumber} withdraw {amount}$ balance equal {Balance}\n";
         }
+
+        public void WithdrawCreditCrad(double amount)
+        {
+            Card.WithdrawCreditCard(amount);
+            _logMessage += $"User {FirstName} {LastName} {_ssnNumber} withdraw {amount}$ from credit card balance equal {Card.Balance}\n";
+        }
+
         public void TakeACredit()
         {
             if (Card is null)
             {
                 Card = CreditDepartment.PermissionToIssueACard(this);
+                _logMessage += $"User {FirstName} {LastName} {_ssnNumber} take a credit\n";
             }
+        }
+
+        public void CloseACredit()
+        {
+            if (!CreditDepartment.CloseACredit(Card))
+            {
+                throw new Exception($"Replenishment balance to {Card.BalanceWithProcent} now {Card.Balance}");
+            }
+            Card = null;
+            _logMessage += $"User {FirstName} {LastName} {_ssnNumber} close a credit\n";
         }
         public void ShowInfo()
         {

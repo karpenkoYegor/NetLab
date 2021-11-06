@@ -136,5 +136,20 @@ namespace BankSystem.Tests
             
             Assert.Equal(expected, account.Card);
         }
+
+        [Fact]
+        public void CloseACredit_ReturnTrue_CurrentBalanceWithProcent()
+        {
+            double currentBalance = 10.0;
+            BankAccount account = new BankAccount("Yegor", "Karpenko", currentBalance, BankAccount.TypeOfAccount.Ordinary);
+            account.TakeACredit();
+            account.Add(1500);
+            account.WithdrawCreditCrad(400);
+            account.Card.Replenishment(650);
+            account.CloseACredit();
+            CreditCard expected = null;
+            
+            Assert.Equal(expected, account.Card);
+        }
     }
 }

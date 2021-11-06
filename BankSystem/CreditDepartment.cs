@@ -38,5 +38,14 @@ namespace BankSystem
 
             return new CreditCard(_startBalance, _procent);
         }
+        
+        public static bool CloseACredit(CreditCard creditCard)
+        {
+            if (creditCard.Balance >= creditCard.BalanceWithProcent)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
