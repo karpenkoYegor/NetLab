@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\BankSystem.Tests\UnitTest1.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using Xunit;
+
+namespace BankSystem.Tests
+{
+    public class UnitTest1
+    {
+        [Fact]
+        public void Withdraw_ValidAmount_ChageBalance()
+        {
+            double currentBalance = 10.0;
+            double withdrawal = 1.0;
+            double expected = 9.0;
+            var account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;,currentBalance, BankAccount.TypeOfAccount.Ordinary);
+
+            account.Withdraw(withdrawal);
+
+            Assert.Equal(expected, account.Balance);
+
+        }
+        [Fact]
+        public void Withdraw_OrdinaryAccount_ChageBalance()
+        {
+            double currentBalance = 1000.0;
+            double withdrawal = 600.0;
+            double expected = 500.0;
+            var account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.Ordinary);
+
+            account.Withdraw(withdrawal);
+
+            Assert.Equal(expected, account.Balance);
+
+        }
+        [Fact]
+        public void Withdraw_WithdrawalMoreCurrentBalance_ChageBalance()
+        {
+            double currentBalance = 500.0;
+            double withdrawal = 600.0;
+            var account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.Ordinary);
+
+            Assert.Throws&lt;ArgumentOutOfRangeException&gt;(() =&gt; account.Withdraw(withdrawal));
+
+        }
+        [Fact]
+        public void Withdraw_VIPAccount_ChageBalance()
+        {
+            double currentBalance = 1000.0;
+            double withdrawal = 600.0;
+            double expected = 400.0;
+            var account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.VIP);
+
+            account.Withdraw(withdrawal);
+
+            Assert.Equal(expected, account.Balance);
+        }
+
+        [Fact]
+        public void Adding_ValidAmount_ChangeBalance()
+        {
+            double currentBalance = 9.0;
+            double adding = 1.0;
+            double expected = 10.0;
+            var account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.Ordinary);
+
+            account.Add(adding);
+
+            Assert.Equal(expected, account.Balance);
+        }
+        [Fact]
+        public void Adding_InvalidAmount_ChangeBalance()
+        {
+            double currentBalance = 9.0;
+            double adding = 0;
+            double expected = 10.0;
+            var account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.Ordinary);
+
+
+            Assert.Throws&lt;ArgumentOutOfRangeException&gt;(() =&gt; account.Add(adding));
+        }
+        [Fact]
+        public void TransferMoneyTo_ValidAmount_ChangeBothAccount()
+        {
+            double currentBalanceFirstAccount = 9.0;
+            double currentBalanceSecondAccount = 10.0;
+            double expectedFirstAccountBalance = 4.0;
+            double expectedSecondAccountBalance = 15.0;
+            var account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalanceFirstAccount, BankAccount.TypeOfAccount.Ordinary);
+            var otherAccount = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalanceSecondAccount, BankAccount.TypeOfAccount.Ordinary);
+
+            account.TransferMoneyTo(otherAccount, 5);
+
+            Assert.Equal(expectedFirstAccountBalance, account.Balance);
+            Assert.Equal(expectedSecondAccountBalance, otherAccount.Balance);
+        }
+        [Fact]
+        public void TransferMoneyTo_NullAccount_ChangeBothAccount()
+        {
+            double currentBalance = 9.0;
+            double adding = 1.0;
+            double expected = 10.0;
+            BankAccount account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.Ordinary);
+            BankAccount otherAccount = null;
+
+            Assert.Throws&lt;NullReferenceException&gt;(() =&gt; account.TransferMoneyTo(otherAccount, 5));
+        }
+
+        [Fact]
+        public void ShowInfo_InformatoinAboutAccount_Information()
+        {
+            double currentBalance = 9.0;
+            double adding = 1.0;
+            double expected = 10.0;
+            BankAccount account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.Ordinary);
+
+            account.ShowInfo();
+        }
+        [Fact]
+        public void TakeACredit_CreditCardIsNotNull_InicializeCard()
+        {
+            double currentBalance = 10.0;
+            BankAccount account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.Ordinary);
+            account.TakeACredit();
+
+            var expected = account.Card;
+            
+            Assert.NotEqual(expected, null);
+        }
+        [Fact]
+        public void TakeACredit_CurrentBalanceMoreThan200_InicializeCard()
+        {
+            double currentBalance = 500.0;
+            BankAccount account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.Ordinary);
+            account.TakeACredit();
+
+            CreditCard expected = null;
+            
+            Assert.Equal(expected, account.Card);
+        }
+
+        [Fact]
+        public void CloseACredit_ReturnTrue_CurrentBalanceWithProcent()
+        {
+            double currentBalance = 10.0;
+            BankAccount account = new BankAccount(&quot;Yegor&quot;, &quot;Karpenko&quot;, currentBalance, BankAccount.TypeOfAccount.Ordinary);
+            account.TakeACredit();
+            account.Add(1500);
+            account.WithdrawCreditCrad(400);
+            account.Card.Replenishment(650);
+            account.CloseACredit();
+            CreditCard expected = null;
+            
+            Assert.Equal(expected, account.Card);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,9,10,10,1],[11,13,11,42,1],[12,13,12,37,1],[13,13,13,35,1],[14,13,14,115,1],[16,13,16,42,1],[18,13,18,53,1],[20,9,20,10,1],[23,9,23,10,1],[24,13,24,44,1],[25,13,25,39,1],[26,13,26,37,1],[27,13,27,116,1],[29,13,29,42,1],[31,13,31,53,1],[33,9,33,10,1],[36,9,36,10,1],[37,13,37,43,1],[38,13,38,39,1],[39,13,39,116,1],[41,13,41,62,1],[41,62,41,90,1],[41,90,41,92,1],[43,9,43,10,1],[46,9,46,10,1],[47,13,47,44,1],[48,13,48,39,1],[49,13,49,37,1],[50,13,50,111,1],[52,13,52,42,1],[54,13,54,53,1],[55,9,55,10,1],[59,9,59,10,1],[60,13,60,41,1],[61,13,61,33,1],[62,13,62,36,1],[63,13,63,116,1],[65,13,65,33,1],[67,13,67,53,1],[68,9,68,10,1],[71,9,71,10,1],[72,13,72,41,1],[73,13,73,31,1],[74,13,74,36,1],[75,13,75,116,1],[78,13,78,62,1],[78,62,78,81,1],[78,81,78,83,1],[79,9,79,10,1],[82,9,82,10,1],[83,13,83,53,1],[84,13,84,55,1],[85,13,85,54,1],[86,13,86,56,1],[87,13,87,128,1],[88,13,88,134,1],[90,13,90,54,1],[92,13,92,72,1],[93,13,93,78,1],[94,9,94,10,1],[97,9,97,10,1],[98,13,98,41,1],[99,13,99,33,1],[100,13,100,36,1],[101,13,101,124,1],[102,13,102,45,1],[104,13,104,57,1],[104,57,104,97,1],[104,97,104,99,1],[105,9,105,10,1],[109,9,109,10,1],[110,13,110,41,1],[111,13,111,33,1],[112,13,112,36,1],[113,13,113,124,1],[115,13,115,32,1],[116,9,116,10,1],[119,9,119,10,1],[120,13,120,42,1],[121,13,121,124,1],[122,13,122,35,1],[124,13,124,41,1],[126,13,126,45,1],[127,9,127,10,1],[130,9,130,10,1],[131,13,131,43,1],[132,13,132,124,1],[133,13,133,35,1],[135,13,135,40,1],[137,13,137,50,1],[138,9,138,10,1],[142,9,142,10,1],[143,13,143,42,1],[144,13,144,124,1],[145,13,145,35,1],[146,13,146,31,1],[147,13,147,45,1],[148,13,148,45,1],[149,13,149,36,1],[150,13,150,40,1],[152,13,152,50,1],[153,9,153,10,1]]);
+    </script>
+  </body>
+</html>

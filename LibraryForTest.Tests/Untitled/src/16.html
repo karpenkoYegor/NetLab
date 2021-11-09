@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\LibraryForTest\TestTask4.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LibraryForTest
+{
+    public class TestTask4
+    {
+        public int IpsBetween(string ip_1, string ip_2)
+        {
+            string[] array_1 = ip_1.Split(&#39;.&#39;);
+            string[] array_2 = ip_2.Split(&#39;.&#39;);
+
+            int ip_numbers = 0;
+
+            for (int i = 0; i &lt; array_1.Length; i++)
+            {
+                int j = array_1.Length - 1 - i;
+                ip_numbers += (Convert.ToInt32(array_2[i]) - Convert.ToInt32(array_1[i])) * (int)Math.Pow(256, j);
+            }
+            return ip_numbers;
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[12,9,12,10,1],[13,13,13,48,1],[14,13,14,48,1],[16,13,16,32,1],[18,18,18,27,1],[18,29,18,47,1],[18,49,18,52,1],[19,13,19,14,1],[20,17,20,48,1],[21,17,21,115,1],[22,13,22,14,1],[23,13,23,31,1],[24,9,24,10,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\LibraryForTest\BookShop.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace LibraryForTest
+{
+    public class BookShop
+    {
+        private int[] _purchasedBooks;
+        private int _costOfBook = 8;
+        public BookShop(int[] purchasedBooks)
+        {
+            _purchasedBooks = purchasedBooks;
+        }
+
+        public double FinalCost()
+        {
+            int countOfBook;
+            double finalCost = 0;
+            double discount = 0;
+            for (int j = 0; j &lt; _purchasedBooks.Length; j++)
+            {
+                countOfBook = 0;
+                for (int i = 0; i &lt; _purchasedBooks.Length; i++)
+                {
+                    if (_purchasedBooks[i] &gt; 0)
+                    {
+                        _purchasedBooks[i]--;
+                        countOfBook++;
+                    }
+                }
+
+                switch (countOfBook)
+                {
+                    case 1:
+                        discount = 1;
+                        break;
+                    case 2:
+                        discount = 0.95;
+                        break;
+                    case 3:
+                        discount = 0.9;
+                        break;
+                    case 4:
+                        discount = 0.8;
+                        break;
+                    case 5:
+                        discount = 0.75;
+                        break;
+                }
+                finalCost += _costOfBook * countOfBook * discount;
+            }
+
+            return finalCost;
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[6,9,6,37,1],[7,9,7,46,1],[8,9,8,10,1],[9,13,9,46,1],[10,9,10,10,1],[13,9,13,10,1],[15,13,15,34,1],[16,13,16,33,1],[17,18,17,27,1],[17,29,17,55,1],[17,57,17,60,1],[18,13,18,14,1],[19,17,19,33,1],[20,22,20,31,1],[20,33,20,59,1],[20,61,20,64,1],[21,17,21,18,1],[22,21,22,48,1],[23,21,23,22,1],[24,25,24,46,1],[25,25,25,39,1],[26,21,26,22,1],[27,17,27,18,1],[29,17,29,37,1],[32,25,32,38,0],[33,25,33,31,0],[35,25,35,41,0],[36,25,36,31,0],[38,25,38,40,1],[39,25,39,31,1],[41,25,41,40,0],[42,25,42,31,0],[44,25,44,41,1],[45,25,45,31,1],[47,17,47,67,1],[48,13,48,14,1],[50,13,50,30,1],[51,9,51,10,1]]);
+    </script>
+  </body>
+</html>
