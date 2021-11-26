@@ -1,43 +1,24 @@
-name: xUnit.net Analyzers PR Build
-on:
-  - pull_request
-  - workflow_dispatch
+name: dotnet package
+
+on: [push]
 
 jobs:
   build:
-    name: "Build for PR"
-    runs-on: ${{ matrix.os }}
-    env:
-      DOTNET_NOLOGO: true
+
+    runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-18.04, macOS-latest]
+        dotnet-version: ['3.0', '3.1.x', '5.0.x' ]
+
     steps:
-      - name: Clone source
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1.7.2
         with:
-          fetch-depth: 0
-
-      - name: Install .NET Core SDK 3.1
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '3.1.x'
-
-      - name: Install .NET SDK 5.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '5.0.x'
-
-      - name: Get .NET information
-        run: dotnet --info
-
-      - name: "Build target: PR"
-        run: dotnet run --project tools/builder --no-launch-profile -- PR
-
-      - name: "Upload artifact: test-${{ matrix.os }}"
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-${{ matrix.os }}
-          path: artifacts/test
-        if: always()
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
