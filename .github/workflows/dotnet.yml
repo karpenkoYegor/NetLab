@@ -29,4 +29,4 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
 
     - name: Build the tests
-      run: msbuild BankSystem.Tests.csproj
+      run: msbuild BankSystem.Tests.BankSystem.Tests.csproj
