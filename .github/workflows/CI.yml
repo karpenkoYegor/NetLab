@@ -27,4 +27,4 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        files: ./tests/mytests.trx
+        files: /home/runner/work/LeverXNetLab/LeverXNetLab/LibraryForTest.Tests/TestResults/./tests/mytests.trx
