@@ -22,7 +22,14 @@ jobs:
     - name: Build
       run: dotnet build
     - name: Test
-      run: dotnet test --logger "trx;LogFileName=/tests/mytests.trx"
+      run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: dotnet-results-${{ matrix.dotnet-version }}
+        path: TestResults-${{ matrix.dotnet-version }}
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
