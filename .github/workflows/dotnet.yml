@@ -22,9 +22,9 @@ jobs:
     - name: Build
       run: dotnet build
     - name: Test
-      run: dotnet test --logger "trx;LogFileName=./tests/mytests.trx"
+      run: dotnet test --logger "trx;LogFileName=/tests/mytests.trx"
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        files: /home/runner/work/LeverXNetLab/LeverXNetLab/LibraryForTest.Tests/TestResults/./tests/mytests.trx
+        files: /home/runner/work/LeverXNetLab/LeverXNetLab/LibraryForTest.Tests/TestResults/tests/mytests.trx
