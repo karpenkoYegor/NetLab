@@ -29,11 +29,13 @@ jobs:
         name: artifacts${{ matrix.dotnet-version }}
         path: artifacts${{ matrix.dotnet-version }}
     - name: Download Artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v2.0.10
       with:
         path: artifacts
-    - name: Publish Unit Test Results
-      uses: EnricoMi/publish-unit-test-result-action/composite@v1
-      if: always()
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()    # run this step even if previous step failed
       with:
-        files: "artifacts/ResultTest.xml"
+        name: Tests          # Name of the check run which will be created
+        path: artifacts/ResultTest.xml    # Path to test results
+        reporter: jest-junit        # Format of test results
