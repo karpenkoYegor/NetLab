@@ -37,6 +37,5 @@ jobs:
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: Tests          # Name of the check run which will be created
-        artifact: 'test-results-'
         path: 'test-results-/ResultTest.xml'    # Path to test results
         reporter: 'dotnet-trx'        # Format of test results
