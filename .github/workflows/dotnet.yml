@@ -22,20 +22,21 @@ jobs:
     - name: Build
       run: dotnet build
     - name: Test
-      run: dotnet test "BankSystem.Tests/BankSystem.Tests.csproj" --logger "trx;LogFileName=ResultTest.xml" --results-directory "artifacts"
+      run: dotnet test "BankSystem.Tests/BankSystem.Tests.csproj" --logger "trx;LogFileName=ResultTest.trx" --results-directory "test-results-"
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v2
       with:
-        name: artifacts${{ matrix.dotnet-version }}
-        path: artifacts${{ matrix.dotnet-version }}
+        name: test-results-${{ matrix.dotnet-version }}
+        path: test-results-${{ matrix.dotnet-version }}
     - name: Download Artifacts
       uses: actions/download-artifact@v2.0.10
       with:
-        path: artifacts
+        path: test-results-
     - name: Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: Tests          # Name of the check run which will be created
-        path: artifacts/ResultTest.xml    # Path to test results
-        reporter: jest-junit        # Format of test results
+        artifact: 'test-results-'
+        path: 'test-results-/ResultTest.xml'    # Path to test results
+        reporter: 'dotnet-trx'        # Format of test results
