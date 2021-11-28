@@ -22,14 +22,18 @@ jobs:
     - name: Build
       run: dotnet build
     - name: Test
-      run: dotnet test "BankSystem.Tests/BankSystem.Tests.csproj" --logger "trx;LogFileName=ResultTest.trx" --results-directory "TestResults-${{ matrix.dotnet-version }}"
+      run: dotnet test "BankSystem.Tests/BankSystem.Tests.csproj" --logger "trx;LogFileName=ResultTest.trx" --results-directory "artifacts"
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v2
       with:
-        name: dotnet-results${{ matrix.dotnet-version }}
-        path: TestResults-${{ matrix.dotnet-version }}
+        name: artifacts${{ matrix.dotnet-version }}
+        path: artifacts${{ matrix.dotnet-version }}
+    - name: Download Artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: artifacts
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        files: "dotnet-results/ResultTest.trx"
+        files: "artifacts/ResultTest.trx"
