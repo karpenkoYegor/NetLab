@@ -22,11 +22,11 @@ jobs:
     - name: Build
       run: dotnet build
     - name: Test
-      run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+      run: dotnet test --logger -l:trx;LogFileName=ResultTest.trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v2
       with:
-        name: dotnet-results-${{ matrix.dotnet-version }}
+        name: dotnet-results${{ matrix.dotnet-version }}
         path: TestResults-${{ matrix.dotnet-version }}
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
