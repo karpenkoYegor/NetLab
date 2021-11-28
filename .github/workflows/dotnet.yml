@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build
     - name: Test
-      run: dotnet test "BankSystem.Tests/BankSystem.Tests.csproj" --logger "trx;LogFileName=ResultTest.trx" --results-directory "artifacts"
+      run: dotnet test "BankSystem.Tests/BankSystem.Tests.csproj" --logger "trx;LogFileName=ResultTest.xml" --results-directory "artifacts"
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v2
       with:
@@ -36,4 +36,4 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        files: "artifacts/ResultTest.trx"
+        files: "artifacts/ResultTest.xml"
