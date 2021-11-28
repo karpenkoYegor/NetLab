@@ -32,4 +32,4 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        files: /home/runner/work/LeverXNetLab/LeverXNetLab/LibraryForTest.Tests/TestResults/tests/mytests.trx
+        files: TestResults-${{ matrix.dotnet-version }}
