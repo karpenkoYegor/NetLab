@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Channels;
 using UniversityDb;
 
 namespace EntityHomeworkLab8
@@ -7,10 +8,20 @@ namespace EntityHomeworkLab8
     {
         static void Main(string[] args)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            try
             {
-                
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    db.Database.EnsureCreated();
+
+                    Console.WriteLine("Success");
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + "Creation error");
+            }
+            
         }
     }
 }
