@@ -6,14 +6,15 @@ namespace UniversityDb
 {
     public class StudentSubject
     {
-        public int StudentID { get; private set; }
-
-        public int SubjectID { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StudentID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int SubjectID { get; set; }
         
-        public int Mark { get; private set; }
-        [ForeignKey("StudentID")]
+        public int Mark { get; set; }
+
         public Student Student { get; set; }
-        [ForeignKey("SubjectID")]
+
         public Subject Subject { get; set; }
     }
 }

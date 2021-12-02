@@ -6,12 +6,14 @@ namespace UniversityDb
 {
     public class Group
     {
-        public int GroupID { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int GroupID { get; set; }
         [Required]
-        public string Name { get; private set; }
-        public int UniversityID { get; private set; }
+        public string Name { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int UniversityID { get; set; }
         public List<Student> Student { get; set; }
-        [ForeignKey("UniversityID")]
+
         public University University { get; set; }
     }
 }

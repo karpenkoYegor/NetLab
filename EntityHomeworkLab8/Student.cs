@@ -7,18 +7,21 @@ namespace UniversityDb
 {
     public class Student
     {
-        public int StudentID { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StudentID { get; set; }
         [Required]
-        public string Name { get; private set; }
+        public string Name { get; set; }
         [Required]
-        public DateTime Birthday { get; private set; }
-        public int Bursary { get; private set; }
-        public int? Bonus { get; private set; }
-        public int? CityID { get; private set; }
-        public int GroupID { get; private set; }
-        [ForeignKey("CityID")]
+        public DateTime Birthday { get; set; }
+        public int Bursary { get; set; }
+        public int? Bonus { get; set; }
+
+        public int? CityID { get; set; }
+
+        public int GroupID { get; set; }
+
         public City City { get; set; }
-        [ForeignKey("GroupID")]
+
         public Group Group { get; set; }
         public List<StudentSubject> StudentSubject { get; set; }
     }

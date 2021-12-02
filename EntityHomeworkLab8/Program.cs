@@ -12,6 +12,7 @@ namespace EntityHomeworkLab8
             {
                 using (ApplicationDbContext db = new ApplicationDbContext())
                 {
+                    db.Database.EnsureDeleted();
                     db.Database.EnsureCreated();
 
                     Console.WriteLine("Success");

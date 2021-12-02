@@ -6,12 +6,13 @@ namespace UniversityDb
 {
     public class Teacher
     {
-        public int TeacherID { get; private set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int TeacherID { get; set; }
         [Required]
-        public string Name { get; private set; }
-        public int Phone { get; private set; }
-        public int SubjectID { get; private set; }
-        [ForeignKey("SubjectID")]
+        public string Name { get; set; }
+        public int Phone { get; set; }
+        public int SubjectID { get; set; }
+
         public Subject Subject { get; set; }
         public List<UniversityTeacher> UniversityTeacher { get; set; }
     }

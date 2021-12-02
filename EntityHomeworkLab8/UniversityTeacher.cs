@@ -5,12 +5,14 @@ namespace UniversityDb
 {
     public class UniversityTeacher
     {
-        public int TeacherID { get; private set; }
-        public int UniversityID { get; private set; }
-        public int Wage { get; private set; }
-        [ForeignKey("TeacherID")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int TeacherID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int UniversityID { get; set; }
+        public int Wage { get; set; }
+
         public Teacher Teacher { get; set; }
-        [ForeignKey("UniversityID")]
+
         public University University { get; set; }
     }
 }
