@@ -71,7 +71,6 @@ namespace BankSystem.Tests
         {
             double currentBalance = 9.0;
             double adding = 0;
-            double expected = 10.0;
             var account = new BankAccount("Yegor", "Karpenko", currentBalance, BankAccount.TypeOfAccount.Ordinary);
 
 
@@ -96,8 +95,6 @@ namespace BankSystem.Tests
         public void TransferMoneyTo_NullAccount_ChangeBothAccount()
         {
             double currentBalance = 9.0;
-            double adding = 1.0;
-            double expected = 10.0;
             BankAccount account = new BankAccount("Yegor", "Karpenko", currentBalance, BankAccount.TypeOfAccount.Ordinary);
             BankAccount otherAccount = null;
 
@@ -108,8 +105,6 @@ namespace BankSystem.Tests
         public void ShowInfo_InformatoinAboutAccount_Information()
         {
             double currentBalance = 9.0;
-            double adding = 1.0;
-            double expected = 10.0;
             BankAccount account = new BankAccount("Yegor", "Karpenko", currentBalance, BankAccount.TypeOfAccount.Ordinary);
 
             account.ShowInfo();
@@ -123,7 +118,7 @@ namespace BankSystem.Tests
 
             var expected = account.Card;
             
-            Assert.NotEqual(expected, null);
+            Assert.NotNull(expected);
         }
         [Fact]
         public void TakeACredit_CurrentBalanceMoreThan200_InicializeCard()
