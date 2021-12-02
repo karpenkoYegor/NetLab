@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace UniversityDb
 {
@@ -9,5 +10,7 @@ namespace UniversityDb
         public int SubjectID { get; private set; }
         
         public int Mark { get; private set; }
+        public Student Student { get; set; }
+        public Subject Subject { get; set; }
     }
 }

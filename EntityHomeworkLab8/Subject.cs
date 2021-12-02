@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace UniversityDb
 {
@@ -9,5 +10,7 @@ namespace UniversityDb
         public string Name { get; private set; }
         [Required]
         public string Duration { get; private set; }
+        public List<Teacher> Teacher { get; set; }
+        public List<StudentSubject> StudentSubject { get; set; }
     }
 }

@@ -3,21 +3,41 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityDb;
 
 namespace UniversityDb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211202134939_AddRelations")]
+    partial class AddRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("StudentStudentSubject", b =>
+                {
+                    b.Property<int>("StudentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentSubjectStudentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentSubjectSubjectID")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentID", "StudentSubjectStudentID", "StudentSubjectSubjectID");
+
+                    b.HasIndex("StudentSubjectStudentID", "StudentSubjectSubjectID");
+
+                    b.ToTable("StudentStudentSubject");
+                });
 
             modelBuilder.Entity("UniversityDb.City", b =>
                 {
@@ -107,8 +127,6 @@ namespace UniversityDb.Migrations
 
                     b.HasKey("StudentID", "SubjectID");
 
-                    b.HasIndex("SubjectID");
-
                     b.ToTable("StudentSubject");
                 });
 
@@ -127,7 +145,15 @@ namespace UniversityDb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StudentSubjectStudentID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudentSubjectSubjectID")
+                        .HasColumnType("int");
+
                     b.HasKey("SubjectID");
+
+                    b.HasIndex("StudentSubjectStudentID", "StudentSubjectSubjectID");
 
                     b.ToTable("Subject");
                 });
@@ -199,6 +225,21 @@ namespace UniversityDb.Migrations
                     b.ToTable("UniversityTeacher");
                 });
 
+            modelBuilder.Entity("StudentStudentSubject", b =>
+                {
+                    b.HasOne("UniversityDb.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityDb.StudentSubject", null)
+                        .WithMany()
+                        .HasForeignKey("StudentSubjectStudentID", "StudentSubjectSubjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("UniversityDb.Group", b =>
                 {
                     b.HasOne("UniversityDb.University", "University")
@@ -227,23 +268,13 @@ namespace UniversityDb.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("UniversityDb.StudentSubject", b =>
+            modelBuilder.Entity("UniversityDb.Subject", b =>
                 {
-                    b.HasOne("UniversityDb.Student", "Student")
-                        .WithMany("StudentSubject")
-                        .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("UniversityDb.StudentSubject", "StudentSubject")
+                        .WithMany("Subject")
+                        .HasForeignKey("StudentSubjectStudentID", "StudentSubjectSubjectID");
 
-                    b.HasOne("UniversityDb.Subject", "Subject")
-                        .WithMany("StudentSubject")
-                        .HasForeignKey("SubjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Subject");
+                    b.Navigation("StudentSubject");
                 });
 
             modelBuilder.Entity("UniversityDb.Teacher", b =>
@@ -299,15 +330,13 @@ namespace UniversityDb.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("UniversityDb.Student", b =>
+            modelBuilder.Entity("UniversityDb.StudentSubject", b =>
                 {
-                    b.Navigation("StudentSubject");
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("UniversityDb.Subject", b =>
                 {
-                    b.Navigation("StudentSubject");
-
                     b.Navigation("Teacher");
                 });
 

@@ -13,6 +13,7 @@ namespace UniversityDb
         public DbSet<Teacher> Teacher { get; set; }
         public DbSet<UniversityTeacher> UniversityTeacher { get; set; }
 
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(

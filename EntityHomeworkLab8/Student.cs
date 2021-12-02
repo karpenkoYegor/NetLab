@@ -1,6 +1,5 @@
-﻿
-
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace UniversityDb
@@ -16,5 +15,8 @@ namespace UniversityDb
         public int? Bonus { get; private set; }
         public int? CityID { get; private set; }
         public int GroupID { get; private set; }
+        public City City { get; set; }
+        public Group Group { get; set; }
+        public List<StudentSubject> StudentSubject { get; set; }
     }
 }

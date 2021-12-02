@@ -1,4 +1,5 @@
 ﻿using System;
+using UniversityDb;
 
 namespace EntityHomeworkLab8
 {
@@ -6,7 +7,10 @@ namespace EntityHomeworkLab8
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                
+            }
         }
     }
 }

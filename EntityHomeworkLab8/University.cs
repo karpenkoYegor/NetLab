@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UniversityDb
 {
@@ -10,5 +12,8 @@ namespace UniversityDb
         [Required]
         public string Address { get; private set; }
         public int CityID { get; private set; }
+        public City City { get; set; }
+        public List<Group> Group { get; set; }
+        public List<UniversityTeacher> UniversityTeacher { get; set; }
     }
 }
