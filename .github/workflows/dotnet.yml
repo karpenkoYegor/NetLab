@@ -34,6 +34,6 @@ jobs:
       uses: NasAmin/trx-parser@v0.2.0
       with:
     # Path to the directory containing trx files
-        TRX_PATH: TestResults-${{ matrix.dotnet-version }}/dotnet-results-${{ matrix.dotnet-version }}
+        TRX_PATH: TestResults-${{ matrix.dotnet-version }}
 
 
