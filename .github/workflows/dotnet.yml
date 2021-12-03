@@ -21,14 +21,19 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.4
+    - name: Test with dotnet
+      run: dotnet test "BankSystem.Tests/BankSystem.Tests.csproj" --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v2
       with:
-    # Artifact name
-        name: TestResults
-    # A file, directory or wildcard pattern that describes what to upload
-        path: artifacts
-    # The desired behavior if no files are found using the provided path.
+        name: dotnet-results-${{ matrix.dotnet-version }}
+        path: TestResults-${{ matrix.dotnet-version }}
+    - name: trx-parser
+  # You may pin to the exact commit or the version.
+  # uses: NasAmin/trx-parser@2ba59ca11c1060572e96540966b730b779e0bdd0
+      uses: NasAmin/trx-parser@v0.2.0
+      with:
+    # Path to the directory containing trx files
+        TRX_PATH: TestResults-${{ matrix.dotnet-version }}/dotnet-results-${{ matrix.dotnet-version }}
+
 
