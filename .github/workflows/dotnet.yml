@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test with dotnet
-      run: dotnet test "BankSystem.Tests/BankSystem.Tests.csproj" --loger trx --results-directory ./TestResults
+      run: dotnet test "BankSystem.Tests/BankSystem.Tests.csproj" --logger trx --results-directory ./TestResults
     - name: Parse Trx files
       uses: NasAmin/trx-parser@v0.0.3
       id: trx-parser
