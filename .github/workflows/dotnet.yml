@@ -35,5 +35,6 @@ jobs:
       with:
     # Path to the directory containing trx files
         TRX_PATH: TestResults-${{ matrix.dotnet-version }}
+        REPO_TOKEN: ${{secrets.Repo_Token}}
 
 
