@@ -11,6 +11,7 @@ namespace UniversityDb
         [Required]
         public string Name { get; set; }
         public int Phone { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SubjectID { get; set; }
 
         public Subject Subject { get; set; }

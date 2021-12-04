@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Channels;
+using Microsoft.EntityFrameworkCore;
 using UniversityDb;
 
 namespace EntityHomeworkLab8
@@ -13,7 +15,7 @@ namespace EntityHomeworkLab8
                 using (ApplicationDbContext db = new ApplicationDbContext())
                 {
                     db.Database.EnsureDeleted();
-                    db.Database.EnsureCreated();
+                    db.Database.Migrate();
 
                     Console.WriteLine("Success");
                 }

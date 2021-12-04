@@ -15,9 +15,9 @@ namespace UniversityDb
         public DateTime Birthday { get; set; }
         public int Bursary { get; set; }
         public int? Bonus { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int? CityID { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int GroupID { get; set; }
 
         public City City { get; set; }

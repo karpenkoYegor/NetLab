@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace UniversityDb
 {
@@ -18,6 +22,7 @@ namespace UniversityDb
         {
             optionsBuilder.UseSqlServer(
                 @"Server=(localdb)\mssqllocaldb;Database=UniversityDb;Trusted_Connection=True;");
+            optionsBuilder.LogTo(message => Debug.WriteLine(message), new[] {RelationalEventId.CommandExecuted});
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

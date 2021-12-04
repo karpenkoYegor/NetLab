@@ -10,8 +10,8 @@ using UniversityDb;
 namespace UniversityDb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211202142330_AddForeignKeys")]
-    partial class AddForeignKeys
+    [Migration("20211204130046_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,9 +24,7 @@ namespace UniversityDb.Migrations
             modelBuilder.Entity("UniversityDb.City", b =>
                 {
                     b.Property<int>("CityID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -43,9 +41,7 @@ namespace UniversityDb.Migrations
             modelBuilder.Entity("UniversityDb.Group", b =>
                 {
                     b.Property<int>("GroupID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -64,9 +60,7 @@ namespace UniversityDb.Migrations
             modelBuilder.Entity("UniversityDb.Student", b =>
                 {
                     b.Property<int>("StudentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
@@ -117,9 +111,7 @@ namespace UniversityDb.Migrations
             modelBuilder.Entity("UniversityDb.Subject", b =>
                 {
                     b.Property<int>("SubjectID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Duration")
                         .IsRequired()
@@ -137,9 +129,7 @@ namespace UniversityDb.Migrations
             modelBuilder.Entity("UniversityDb.Teacher", b =>
                 {
                     b.Property<int>("TeacherID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -161,9 +151,7 @@ namespace UniversityDb.Migrations
             modelBuilder.Entity("UniversityDb.University", b =>
                 {
                     b.Property<int>("UniversityID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Address")
                         .IsRequired()

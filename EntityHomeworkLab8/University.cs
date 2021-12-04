@@ -12,6 +12,7 @@ namespace UniversityDb
         public string Name { get; set; }
         [Required]
         public string Address { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CityID { get; set; }
 
         public City City { get; set; }
