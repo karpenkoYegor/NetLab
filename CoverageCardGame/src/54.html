@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\CardGame\Desk.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+
+namespace CardGame
+{
+    public class Desk : IDesk
+    {
+        private int _countOfCards;
+        public int CountOfCards 
+        { 
+            get =&gt; _countOfCards; 
+            set =&gt; _countOfCards = (value == 40) ? value : throw new Exception(&quot;Invalid cards value&quot;);
+        }
+        public List&lt;ICard&gt; Cards { get =&gt; _cards; set =&gt; _cards = value; }
+        public List&lt;ICard&gt; GgarbageCards { get =&gt; _garbageCards; set =&gt; _garbageCards = value; }
+
+        private List&lt;ICard&gt; _garbageCards = new List&lt;ICard&gt;();
+        private List&lt;ICard&gt; _cards;
+        private IPlayer _player1;
+        private IPlayer _player2;
+
+        public Desk(IPlayer player1, IPlayer player2)
+        {
+            _player1 = player1;
+            _player2 = player2;
+        }
+
+        public void CheckCards(ICard cardPlayer1, ICard cardPlayer2)
+        {
+            GgarbageCards.Add(cardPlayer1);
+            GgarbageCards.Add(cardPlayer2);
+            Console.WriteLine($&quot;{_player1.Name} card value {cardPlayer1.Value} ({_player1.Cards.Count + _player1.Discard.Count}) cards&quot;);
+            Console.WriteLine($&quot;{_player2.Name} card value {cardPlayer2.Value} ({_player2.Cards.Count + _player2.Discard.Count}) cards&quot;);
+            if (GgarbageCards[GgarbageCards.Count - 2].Value &gt; GgarbageCards[GgarbageCards.Count - 1].Value)
+            {
+                ShowWinnerRound(_player1);
+            }
+            else
+            {
+                if (GgarbageCards[GgarbageCards.Count - 2].Value &lt; GgarbageCards[GgarbageCards.Count - 1].Value)
+                {
+                    ShowWinnerRound(_player2);
+                }
+                else
+                {
+                    if (CheckDraw(_player1))
+                    {
+                        ShowPlayer(_player1);
+                    }
+                    if (CheckDraw(_player2))
+                    {
+                        ShowPlayer(_player2);
+                    }
+                    Console.WriteLine(&quot;Draw&quot;);
+                }
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+            ShowWinnerGame(_player1);
+            ShowWinnerGame(_player2);
+        }
+
+        public void ShowWinnerRound(IPlayer player)
+        {
+            player.Discard.AddRange(GgarbageCards);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($&quot;Won {player.Name} {player.Cards.Count + player.Discard.Count}&quot;);
+            GgarbageCards.Clear();
+        }
+
+        public void ShowWinnerGame(IPlayer player)
+        {
+            if (player.Cards.Count + player.Discard.Count == CountOfCards)
+            {
+                ShowPlayer(player);
+            }
+        }
+
+        public void ShowPlayer(IPlayer player)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($&quot;{player.Name} won this game&quot;);
+        }
+
+        public void GenerateCards()
+        {
+            Cards = new List&lt;ICard&gt;();
+            for (int i = 1; i &lt;= 10; i++)
+            {
+                for (int j = 0; j &lt; 4; j++)
+                {
+                    Cards.Add(new Card(i));
+                }
+            }
+        }
+        public void DealCards()
+        {
+            int halfCount = CountOfCards / 2;
+            List&lt;ICard&gt; cardsForPlayer1 = new List&lt;ICard&gt;();
+            List&lt;ICard&gt; cardsForPlayer2 = new List&lt;ICard&gt;();
+            for (int i = 0; i &lt; halfCount; i++)
+            {
+                cardsForPlayer1.Add(Cards[i]);
+            }
+            for (int i = halfCount; i &lt; Cards.Count; i++)
+            {
+                cardsForPlayer2.Add(Cards[i]);
+            }
+            _player1.DrawCards(cardsForPlayer1);
+            _player2.DrawCards(cardsForPlayer2);
+        }
+
+        public void ShuffleCard()
+        {
+            Cards = RandomShuffle.ShuffleCard(Cards);
+        }
+
+        public bool CheckDraw(IPlayer player)
+        {
+            return player.Cards.Count + player.Discard.Count == CountOfCards - 2;
+        }
+
+        public List&lt;ICard&gt; GetCards()
+        {
+            return Cards;
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,20,11,33,1],[12,20,12,102,1],[14,43,14,49,1],[14,58,14,72,1],[15,51,15,64,1],[15,73,15,94,0],[17,9,17,63,1],[22,9,22,54,1],[23,9,23,10,1],[24,13,24,32,1],[25,13,25,32,1],[26,9,26,10,1],[29,9,29,10,1],[30,13,30,44,1],[31,13,31,44,1],[32,13,32,138,1],[33,13,33,138,1],[34,13,34,109,1],[35,13,35,14,1],[36,17,36,43,1],[37,13,37,14,1],[39,13,39,14,1],[40,17,40,113,1],[41,17,41,18,1],[42,21,42,47,1],[43,17,43,18,1],[45,17,45,18,1],[46,21,46,45,1],[47,21,47,22,0],[48,25,48,46,0],[49,21,49,22,0],[50,21,50,45,1],[51,21,51,22,0],[52,25,52,46,0],[53,21,53,22,0],[54,21,54,47,1],[55,17,55,18,1],[56,13,56,14,1],[57,13,57,58,1],[58,13,58,38,1],[59,13,59,38,1],[60,9,60,10,1],[63,9,63,10,1],[64,13,64,52,1],[65,13,65,58,1],[66,13,66,97,1],[67,13,67,35,1],[68,9,68,10,1],[71,9,71,10,1],[72,13,72,75,1],[73,13,73,14,1],[74,17,74,36,1],[75,13,75,14,1],[76,9,76,10,1],[79,9,79,10,1],[80,13,80,59,1],[81,13,81,63,1],[82,9,82,10,1],[85,9,85,10,1],[86,13,86,39,1],[87,18,87,27,1],[87,29,87,36,1],[87,38,87,41,1],[88,13,88,14,1],[89,22,89,31,1],[89,33,89,38,1],[89,40,89,43,1],[90,17,90,18,1],[91,21,91,44,1],[92,17,92,18,1],[93,13,93,14,1],[94,9,94,10,1],[96,9,96,10,0],[97,13,97,46,0],[98,13,98,61,0],[99,13,99,61,0],[100,18,100,27,0],[100,29,100,42,0],[100,44,100,47,0],[101,13,101,14,0],[102,17,102,47,0],[103,13,103,14,0],[104,18,104,35,0],[104,37,104,52,0],[104,54,104,57,0],[105,13,105,14,0],[106,17,106,47,0],[107,13,107,14,0],[108,13,108,49,0],[109,13,109,49,0],[110,9,110,10,0],[113,9,113,10,1],[114,13,114,54,1],[115,9,115,10,1],[118,9,118,10,1],[119,13,119,82,1],[120,9,120,10,1],[123,9,123,10,1],[124,13,124,26,1],[125,9,125,10,1]]);
+    </script>
+  </body>
+</html>

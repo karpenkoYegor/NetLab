@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\CardGame.Tests\UnitTests1.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using NSubstitute;
+using NUnit.Framework;
+
+namespace CardGame.Tests
+{
+    [TestFixture]
+    public class UnitTests1
+    {
+        private readonly IDesk _desk;
+        private readonly IPlayer _player1;
+        private readonly IPlayer _player2;
+
+        public UnitTests1()
+        {
+            _player1 = new Player(&quot;player1&quot;);
+            _player2 = new Player(&quot;player2&quot;);
+            _desk = new Desk(_player1, _player2);
+        }
+
+        [Test]
+        public void Desk_TrySetCountOfCardEqual40_Return40()
+        {
+            var countOfCard = 40;
+            var desk = _desk;
+            desk.CountOfCards = countOfCard;
+
+            var result = desk.CountOfCards;
+
+            Assert.AreEqual(result, countOfCard);
+        }
+
+        [Test]
+        public void Desk_TrySetCountOfCardNotEqual40_ReturnException()
+        {
+            var countOfCard = 20;
+            var desk = _desk;
+            
+
+            Assert.Throws&lt;Exception&gt;(() =&gt; desk.CountOfCards = countOfCard);
+        }
+
+        [Test]
+        public void Desk_CheckShuffleCard_ReturnShuffleList()
+        {
+            _desk.GenerateCards();
+            var notShuffleList = _desk.GetCards();
+            var list1 = new List&lt;ICard&gt;();
+            list1.AddRange(notShuffleList);
+            _desk.ShuffleCard();
+            
+            var shuffleList = _desk.GetCards();
+            
+            Assert.IsFalse(list1.SequenceEqual(shuffleList));
+        }
+
+        [Test]
+        public void Player_CheckFillCards_ReturnQueueWithCards()
+        {
+            _player1.Discard = new List&lt;ICard&gt;();
+            _player1.Discard.Add(new Card(5));
+            _player1.Discard.Add(new Card(5));
+            _player1.Discard.Add(new Card(5));
+            _player1.Discard.Add(new Card(5));
+            _player1.Cards.Enqueue(new Card(6));
+
+            _player2.Cards.Enqueue(new Card(7));
+            _player2.Cards.Enqueue(new Card(7));
+
+            var expectedCountPlayer1Card = 4;
+
+            _desk.CheckCards(_player1.GetCard(), _player2.GetCard());
+
+            Assert.AreEqual(expectedCountPlayer1Card, _player1.GetCountCards());
+        }
+
+        [Test]
+        public void Desk_CheckCardBattle_ReturnTwoDiscardCards()
+        {
+            var cardWithMoreValue = Substitute.For&lt;ICard&gt;();
+            cardWithMoreValue.Value = 7;
+            var cardWithLessValue = Substitute.For&lt;ICard&gt;();
+            cardWithLessValue.Value = 4;
+            _desk.CheckCards(cardWithMoreValue, cardWithLessValue);
+
+            var expected = 2;
+
+            Assert.AreEqual(expected, _player1.Discard.Count);
+        }
+
+        [Test]
+        public void Desk_CheckDraw_ReturnFourDiscardCards()
+        {
+            var card1 = Substitute.For&lt;ICard&gt;();
+            var card2 = Substitute.For&lt;ICard&gt;();
+            card1.Value = 1;
+            card2.Value = 1;
+            _desk.CheckCards(card1,card2);
+            card1.Value = 7;
+            card2.Value = 8;
+            _desk.CheckCards(card1,card2);
+
+            var expected = 4;
+
+            Assert.AreEqual(expected, _player2.Discard.Count);
+        } 
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[16,9,16,28,1],[17,9,17,10,1],[18,13,18,46,1],[19,13,19,46,1],[20,13,20,50,1],[21,9,21,10,1],[25,9,25,10,1],[26,13,26,34,1],[27,13,27,30,1],[28,13,28,45,1],[30,13,30,44,1],[32,13,32,50,1],[33,9,33,10,1],[37,9,37,10,1],[38,13,38,34,1],[39,13,39,30,1],[42,13,42,44,1],[42,44,42,75,1],[42,75,42,77,1],[43,9,43,10,1],[47,9,47,10,1],[48,13,48,35,1],[49,13,49,51,1],[50,13,50,43,1],[51,13,51,44,1],[52,13,52,33,1],[54,13,54,48,1],[56,13,56,62,1],[57,9,57,10,1],[61,9,61,10,0],[62,13,62,50,0],[63,13,63,47,0],[64,13,64,47,0],[65,13,65,47,0],[66,13,66,47,0],[67,13,67,49,0],[69,13,69,49,0],[70,13,70,49,0],[72,13,72,46,0],[74,13,74,70,0],[76,13,76,81,0],[77,9,77,10,0],[81,9,81,10,1],[82,13,82,61,1],[83,13,83,41,1],[84,13,84,61,1],[85,13,85,41,1],[86,13,86,68,1],[88,13,88,30,1],[90,13,90,63,1],[91,9,91,10,1],[95,9,95,10,1],[96,13,96,49,1],[97,13,97,49,1],[98,13,98,29,1],[99,13,99,29,1],[100,13,100,43,1],[101,13,101,29,1],[102,13,102,29,1],[103,13,103,43,1],[105,13,105,30,1],[107,13,107,63,1],[108,9,108,10,1]]);
+    </script>
+  </body>
+</html>

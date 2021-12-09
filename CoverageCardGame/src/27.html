@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\LibraryForTest\TestTask2.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LibraryForTest
+{
+    public class TestTask2
+    {
+        public string NumericOfString(string inputString)
+        {
+            Dictionary&lt;char, int&gt; dict = new Dictionary&lt;char, int&gt;();
+            var result = &quot;&quot;;
+            foreach (char c in inputString)
+            {
+                if (dict.ContainsKey(c))
+                {
+                    dict[c] += 1;
+                }
+                else
+                {
+                    dict.Add(c, 1);
+                }
+                result += dict[c];
+            }
+
+            return result;
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[12,9,12,10,0],[13,13,13,70,0],[14,13,14,29,0],[15,13,15,20,0],[15,22,15,28,0],[15,29,15,31,0],[15,32,15,43,0],[16,13,16,14,0],[17,17,17,41,0],[18,17,18,18,0],[19,21,19,34,0],[20,17,20,18,0],[22,17,22,18,0],[23,21,23,36,0],[24,17,24,18,0],[25,17,25,35,0],[26,13,26,14,0],[28,13,28,27,0],[29,9,29,10,0]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\EntityHomeworkLab8\Migrations\20211204130046_Init.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace UniversityDb.Migrations
+{
+    public partial class Init : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: &quot;City&quot;,
+                columns: table =&gt; new
+                {
+                    CityID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    Name = table.Column&lt;string&gt;(type: &quot;nvarchar(max)&quot;, nullable: false),
+                    Population = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false)
+                },
+                constraints: table =&gt;
+                {
+                    table.PrimaryKey(&quot;PK_City&quot;, x =&gt; x.CityID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: &quot;Subject&quot;,
+                columns: table =&gt; new
+                {
+                    SubjectID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    Name = table.Column&lt;string&gt;(type: &quot;nvarchar(max)&quot;, nullable: false),
+                    Duration = table.Column&lt;string&gt;(type: &quot;nvarchar(max)&quot;, nullable: false)
+                },
+                constraints: table =&gt;
+                {
+                    table.PrimaryKey(&quot;PK_Subject&quot;, x =&gt; x.SubjectID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: &quot;University&quot;,
+                columns: table =&gt; new
+                {
+                    UniversityID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    Name = table.Column&lt;string&gt;(type: &quot;nvarchar(max)&quot;, nullable: false),
+                    Address = table.Column&lt;string&gt;(type: &quot;nvarchar(max)&quot;, nullable: false),
+                    CityID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false)
+                },
+                constraints: table =&gt;
+                {
+                    table.PrimaryKey(&quot;PK_University&quot;, x =&gt; x.UniversityID);
+                    table.ForeignKey(
+                        name: &quot;FK_University_City_CityID&quot;,
+                        column: x =&gt; x.CityID,
+                        principalTable: &quot;City&quot;,
+                        principalColumn: &quot;CityID&quot;,
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: &quot;Teacher&quot;,
+                columns: table =&gt; new
+                {
+                    TeacherID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    Name = table.Column&lt;string&gt;(type: &quot;nvarchar(max)&quot;, nullable: false),
+                    Phone = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    SubjectID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false)
+                },
+                constraints: table =&gt;
+                {
+                    table.PrimaryKey(&quot;PK_Teacher&quot;, x =&gt; x.TeacherID);
+                    table.ForeignKey(
+                        name: &quot;FK_Teacher_Subject_SubjectID&quot;,
+                        column: x =&gt; x.SubjectID,
+                        principalTable: &quot;Subject&quot;,
+                        principalColumn: &quot;SubjectID&quot;,
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: &quot;Group&quot;,
+                columns: table =&gt; new
+                {
+                    GroupID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    Name = table.Column&lt;string&gt;(type: &quot;nvarchar(max)&quot;, nullable: false),
+                    UniversityID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false)
+                },
+                constraints: table =&gt;
+                {
+                    table.PrimaryKey(&quot;PK_Group&quot;, x =&gt; x.GroupID);
+                    table.ForeignKey(
+                        name: &quot;FK_Group_University_UniversityID&quot;,
+                        column: x =&gt; x.UniversityID,
+                        principalTable: &quot;University&quot;,
+                        principalColumn: &quot;UniversityID&quot;,
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: &quot;UniversityTeacher&quot;,
+                columns: table =&gt; new
+                {
+                    TeacherID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    UniversityID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    Wage = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false)
+                },
+                constraints: table =&gt;
+                {
+                    table.PrimaryKey(&quot;PK_UniversityTeacher&quot;, x =&gt; new { x.TeacherID, x.UniversityID });
+                    table.ForeignKey(
+                        name: &quot;FK_UniversityTeacher_Teacher_TeacherID&quot;,
+                        column: x =&gt; x.TeacherID,
+                        principalTable: &quot;Teacher&quot;,
+                        principalColumn: &quot;TeacherID&quot;,
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: &quot;FK_UniversityTeacher_University_UniversityID&quot;,
+                        column: x =&gt; x.UniversityID,
+                        principalTable: &quot;University&quot;,
+                        principalColumn: &quot;UniversityID&quot;,
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: &quot;Student&quot;,
+                columns: table =&gt; new
+                {
+                    StudentID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    Name = table.Column&lt;string&gt;(type: &quot;nvarchar(max)&quot;, nullable: false),
+                    Birthday = table.Column&lt;DateTime&gt;(type: &quot;datetime2&quot;, nullable: false),
+                    Bursary = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    Bonus = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: true),
+                    CityID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: true),
+                    GroupID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false)
+                },
+                constraints: table =&gt;
+                {
+                    table.PrimaryKey(&quot;PK_Student&quot;, x =&gt; x.StudentID);
+                    table.ForeignKey(
+                        name: &quot;FK_Student_City_CityID&quot;,
+                        column: x =&gt; x.CityID,
+                        principalTable: &quot;City&quot;,
+                        principalColumn: &quot;CityID&quot;,
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: &quot;FK_Student_Group_GroupID&quot;,
+                        column: x =&gt; x.GroupID,
+                        principalTable: &quot;Group&quot;,
+                        principalColumn: &quot;GroupID&quot;,
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: &quot;StudentSubject&quot;,
+                columns: table =&gt; new
+                {
+                    StudentID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    SubjectID = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false),
+                    Mark = table.Column&lt;int&gt;(type: &quot;int&quot;, nullable: false)
+                },
+                constraints: table =&gt;
+                {
+                    table.PrimaryKey(&quot;PK_StudentSubject&quot;, x =&gt; new { x.StudentID, x.SubjectID });
+                    table.ForeignKey(
+                        name: &quot;FK_StudentSubject_Student_StudentID&quot;,
+                        column: x =&gt; x.StudentID,
+                        principalTable: &quot;Student&quot;,
+                        principalColumn: &quot;StudentID&quot;,
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: &quot;FK_StudentSubject_Subject_SubjectID&quot;,
+                        column: x =&gt; x.SubjectID,
+                        principalTable: &quot;Subject&quot;,
+                        principalColumn: &quot;SubjectID&quot;,
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: &quot;IX_Group_UniversityID&quot;,
+                table: &quot;Group&quot;,
+                column: &quot;UniversityID&quot;);
+
+            migrationBuilder.CreateIndex(
+                name: &quot;IX_Student_CityID&quot;,
+                table: &quot;Student&quot;,
+                column: &quot;CityID&quot;);
+
+            migrationBuilder.CreateIndex(
+                name: &quot;IX_Student_GroupID&quot;,
+                table: &quot;Student&quot;,
+                column: &quot;GroupID&quot;);
+
+            migrationBuilder.CreateIndex(
+                name: &quot;IX_StudentSubject_SubjectID&quot;,
+                table: &quot;StudentSubject&quot;,
+                column: &quot;SubjectID&quot;);
+
+            migrationBuilder.CreateIndex(
+                name: &quot;IX_Teacher_SubjectID&quot;,
+                table: &quot;Teacher&quot;,
+                column: &quot;SubjectID&quot;);
+
+            migrationBuilder.CreateIndex(
+                name: &quot;IX_University_CityID&quot;,
+                table: &quot;University&quot;,
+                column: &quot;CityID&quot;);
+
+            migrationBuilder.CreateIndex(
+                name: &quot;IX_UniversityTeacher_UniversityID&quot;,
+                table: &quot;UniversityTeacher&quot;,
+                column: &quot;UniversityID&quot;);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: &quot;StudentSubject&quot;);
+
+            migrationBuilder.DropTable(
+                name: &quot;UniversityTeacher&quot;);
+
+            migrationBuilder.DropTable(
+                name: &quot;Student&quot;);
+
+            migrationBuilder.DropTable(
+                name: &quot;Teacher&quot;);
+
+            migrationBuilder.DropTable(
+                name: &quot;Group&quot;);
+
+            migrationBuilder.DropTable(
+                name: &quot;Subject&quot;);
+
+            migrationBuilder.DropTable(
+                name: &quot;University&quot;);
+
+            migrationBuilder.DropTable(
+                name: &quot;City&quot;);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[9,9,9,10,0],[10,13,12,35,0],[12,35,17,18,0],[17,18,19,17,0],[19,17,19,18,0],[19,18,20,21,0],[20,21,20,64,0],[20,64,21,17,0],[21,17,21,18,0],[21,18,21,20,0],[23,13,25,35,0],[25,35,30,18,0],[30,18,32,17,0],[32,17,32,18,0],[32,18,33,21,0],[33,21,33,70,0],[33,70,34,17,0],[34,17,34,18,0],[34,18,34,20,0],[36,13,38,35,0],[38,35,44,18,0],[44,18,46,17,0],[46,17,46,18,0],[46,18,47,21,0],[47,21,47,76,0],[47,76,48,21,0],[48,21,53,62,0],[53,62,54,17,0],[54,17,54,18,0],[54,18,54,20,0],[56,13,58,35,0],[58,35,64,18,0],[64,18,66,17,0],[66,17,66,18,0],[66,18,67,21,0],[67,21,67,70,0],[67,70,68,21,0],[68,21,73,62,0],[73,62,74,17,0],[74,17,74,18,0],[74,18,74,20,0],[76,13,78,35,0],[78,35,83,18,0],[83,18,85,17,0],[85,17,85,18,0],[85,18,86,21,0],[86,21,86,66,0],[86,66,87,21,0],[87,21,92,62,0],[92,62,93,17,0],[93,17,93,18,0],[93,18,93,20,0],[95,13,97,35,0],[97,35,102,18,0],[102,18,104,17,0],[104,17,104,18,0],[104,18,105,21,0],[105,21,105,104,0],[105,104,106,21,0],[106,21,111,62,0],[111,62,112,21,0],[112,21,117,62,0],[117,62,118,17,0],[118,17,118,18,0],[118,18,118,20,0],[120,13,122,35,0],[122,35,131,18,0],[131,18,133,17,0],[133,17,133,18,0],[133,18,134,21,0],[134,21,134,70,0],[134,70,135,21,0],[135,21,140,63,0],[140,63,141,21,0],[141,21,146,62,0],[146,62,147,17,0],[147,17,147,18,0],[147,18,147,20,0],[149,13,151,35,0],[151,35,156,18,0],[156,18,158,17,0],[158,17,158,18,0],[158,18,159,21,0],[159,21,159,98,0],[159,98,160,21,0],[160,21,165,62,0],[165,62,166,21,0],[166,21,171,62,0],[171,62,172,17,0],[172,17,172,18,0],[172,18,172,20,0],[174,13,177,41,0],[179,13,182,35,0],[184,13,187,36,0],[189,13,192,38,0],[194,13,197,38,0],[199,13,202,35,0],[204,13,207,41,0],[208,9,208,10,0],[211,9,211,10,0],[212,13,213,41,0],[215,13,216,44,0],[218,13,219,34,0],[221,13,222,34,0],[224,13,225,32,0],[227,13,228,34,0],[230,13,231,37,0],[233,13,234,31,0],[235,9,235,10,0]]);
+    </script>
+  </body>
+</html>

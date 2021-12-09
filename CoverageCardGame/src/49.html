@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\CardGame\Program.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+
+namespace CardGame
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IPlayer player1 = new Player(&quot;Yegor&quot;);
+            IPlayer player2 = new Player(&quot;Yarik&quot;);
+
+            IDesk desk = new Desk(player1, player2);
+            desk.CountOfCards = 40;
+            desk.GenerateCards();
+            desk.ShuffleCard();
+            desk.DealCards();
+
+            while (player1.GetCountCards() &gt; 0 &amp;&amp; player2.GetCountCards() &gt; 0)
+            {
+                var cardFirstPlayer = player1.GetCard();
+                var cardSecondPlayer = player2.GetCard();
+                desk.CheckCards(cardFirstPlayer, cardSecondPlayer);
+            }
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[8,9,8,10,0],[9,13,9,51,0],[10,13,10,51,0],[12,13,12,53,0],[13,13,13,36,0],[14,13,14,34,0],[15,13,15,32,0],[16,13,16,30,0],[18,13,18,79,0],[19,13,19,14,0],[20,17,20,57,0],[21,17,21,58,0],[22,17,22,68,0],[23,13,23,14,0],[24,9,24,10,0]]);
+    </script>
+  </body>
+</html>

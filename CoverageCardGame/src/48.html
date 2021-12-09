@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\CardGame\RandomShuffle.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+
+namespace CardGame
+{
+    public static class RandomShuffle
+    {
+        private static Random random = new Random();
+        private static int GenerateAnotherNum(int from, int to) =&gt; random.Next(from, to);
+
+        public static List&lt;ICard&gt; ShuffleCard(List&lt;ICard&gt; cards)
+        {
+            if (cards == null)
+                throw new ArgumentNullException();
+
+            for (int i = 0; i &lt; cards.Count - 1; i++)
+            {
+                int GenObj = GenerateAnotherNum(i, cards.Count);
+
+                var h = cards[i];
+                cards[i] = cards[GenObj];
+                cards[GenObj] = h;
+            }
+
+            return cards;
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[8,9,8,53,1],[9,68,9,89,1],[12,9,12,10,1],[13,13,13,31,1],[14,17,14,51,0],[16,18,16,27,1],[16,29,16,48,1],[16,50,16,53,1],[17,13,17,14,1],[18,17,18,65,1],[20,17,20,34,1],[21,17,21,42,1],[22,17,22,35,1],[23,13,23,14,1],[25,13,25,26,1],[26,9,26,10,1]]);
+    </script>
+  </body>
+</html>

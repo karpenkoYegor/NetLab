@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\BankSystem\CreditCard.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+
+namespace BankSystem
+{
+    public class CreditCard
+    {
+        private double _balanceWithProcent;
+        private double _balance;
+        private int _procent;
+        
+        public CreditCard(double stratBalance, int procent)
+        {
+            Balance = stratBalance;
+            Procent = procent;
+            _balanceWithProcent = Balance * (1 + Procent / 100);
+        }
+
+        public int Procent
+        {
+            get =&gt; _procent;
+            set =&gt; _procent = (value &gt; 100 || value &lt; 0) ? 0 : value;
+        }
+
+        public double Balance
+        {
+            get =&gt; _balance;
+            set =&gt; _balance = (value &lt; 0) ? 0 : value;
+        }
+
+        public double BalanceWithProcent
+        {
+            get =&gt; _balanceWithProcent;
+            
+        }
+
+        public double WithdrawCreditCard(double amount)
+        {
+            if (Balance &lt; amount)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount));
+            }
+
+            return amount;
+        }
+        
+        public void Replenishment(double amount)
+        {
+            if (amount &gt; 0)
+            {
+                _balance += amount;
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,9,11,60,0],[12,9,12,10,0],[13,13,13,36,0],[14,13,14,31,0],[15,13,15,65,0],[16,9,16,10,0],[20,20,20,28,0],[21,20,21,69,0],[26,20,26,28,0],[27,20,27,54,0],[32,20,32,39,0],[37,9,37,10,0],[38,13,38,34,0],[39,13,39,14,0],[40,17,40,71,0],[43,13,43,27,0],[44,9,44,10,0],[47,9,47,10,0],[48,13,48,28,0],[49,13,49,14,0],[50,17,50,36,0],[51,13,51,14,0],[52,9,52,10,0]]);
+    </script>
+  </body>
+</html>

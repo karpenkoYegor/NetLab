@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\CardGame\Player.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+
+namespace CardGame
+{
+    public class Player : IPlayer
+    {
+        private string _name;
+        public string Name { get =&gt; (_name == &quot;&quot;) ? &quot;Unknow&quot; : _name; set =&gt; _name = value; }
+        public Queue&lt;ICard&gt; Cards { get; set; }
+        public List&lt;ICard&gt; Discard { get; set; }
+
+        public Player(string name)
+        {
+            Name = name;
+            Cards = new Queue&lt;ICard&gt;();
+            Discard = new List&lt;ICard&gt;();
+        }
+        public void DrawCards(List&lt;ICard&gt; cards)
+        {
+            foreach (var card in cards)
+            {
+                Cards.Enqueue(card);
+            }
+        }
+
+        public ICard GetCard()
+        {
+            return Cards.Dequeue();
+        }
+
+        public int GetCountCards()
+        {
+            if (Cards.Count == 0)
+            {
+                Discard = RandomShuffle.ShuffleCard(Discard);
+                FillCards();
+            }
+
+            return Cards.Count;
+        }
+
+        public void FillCards()
+        {
+            foreach (var card in Discard)
+            {
+                Cards.Enqueue(card);
+            }
+            Discard.Clear();
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[9,37,9,69,1],[9,78,9,91,1],[10,37,10,41,1],[10,42,10,46,1],[11,38,11,42,1],[11,43,11,47,1],[13,9,13,35,1],[14,9,14,10,1],[15,13,15,25,1],[16,13,16,40,1],[17,13,17,41,1],[18,9,18,10,1],[20,9,20,10,0],[21,13,21,20,0],[21,22,21,30,0],[21,31,21,33,0],[21,34,21,39,0],[22,13,22,14,0],[23,17,23,37,0],[24,13,24,14,0],[25,9,25,10,0],[28,9,28,10,0],[29,13,29,36,0],[30,9,30,10,0],[33,9,33,10,0],[34,13,34,34,0],[35,13,35,14,0],[36,17,36,62,0],[37,17,37,29,0],[38,13,38,14,0],[40,13,40,32,0],[41,9,41,10,0],[44,9,44,10,0],[45,13,45,20,0],[45,22,45,30,0],[45,31,45,33,0],[45,34,45,41,0],[46,13,46,14,0],[47,17,47,37,0],[48,13,48,14,0],[49,13,49,29,0],[50,9,50,10,0]]);
+    </script>
+  </body>
+</html>

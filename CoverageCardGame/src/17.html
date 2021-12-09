@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\EntityHomeworkLab8\ApplicationDbContext.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System.Collections.Generic;
+using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
+
+namespace UniversityDb
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public DbSet&lt;University&gt; University { get; set; }
+        public DbSet&lt;City&gt; City { get; set; }
+        public DbSet&lt;Group&gt; Group { get; set; }
+        public DbSet&lt;Student&gt; Student { get; set; }
+        public DbSet&lt;StudentSubject&gt; StudentSubject { get; set; }
+        public DbSet&lt;Subject&gt; Subject { get; set; }
+        public DbSet&lt;Teacher&gt; Teacher { get; set; }
+        public DbSet&lt;UniversityTeacher&gt; UniversityTeacher { get; set; }
+
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(
+                @&quot;Server=(localdb)\mssqllocaldb;Database=UniversityDb;Trusted_Connection=True;&quot;);
+            optionsBuilder.LogTo(message =&gt; Debug.WriteLine(message), new[] {RelationalEventId.CommandExecuted});
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity&lt;University&gt;().HasKey(u =&gt; u.UniversityID);
+            modelBuilder.Entity&lt;City&gt;().HasKey(u =&gt; u.CityID);
+            modelBuilder.Entity&lt;Group&gt;().HasKey(u =&gt; u.GroupID);
+            modelBuilder.Entity&lt;Student&gt;().HasKey(u =&gt; u.StudentID);
+            modelBuilder.Entity&lt;Subject&gt;().HasKey(u =&gt; u.SubjectID);
+            modelBuilder.Entity&lt;Teacher&gt;().HasKey(u =&gt; u.TeacherID);
+            modelBuilder.Entity&lt;University&gt;()
+                .HasOne(u =&gt; u.City)
+                .WithMany(c =&gt; c.University)
+                .HasForeignKey(u =&gt; u.CityID);
+            modelBuilder.Entity&lt;Group&gt;()
+                .HasOne(u =&gt; u.University)
+                .WithMany(c =&gt; c.Group)
+                .HasForeignKey(u =&gt; u.UniversityID);
+            modelBuilder.Entity&lt;Student&gt;()
+                .HasOne(u =&gt; u.City)
+                .WithMany(c =&gt; c.Student)
+                .HasForeignKey(u =&gt; u.CityID);
+            modelBuilder.Entity&lt;Student&gt;()
+                .HasOne(u =&gt; u.Group)
+                .WithMany(c =&gt; c.Student)
+                .HasForeignKey(u =&gt; u.GroupID);
+            modelBuilder.Entity&lt;Teacher&gt;()
+                .HasOne(u =&gt; u.Subject)
+                .WithMany(c =&gt; c.Teacher)
+                .HasForeignKey(u =&gt; u.SubjectID);
+            modelBuilder.Entity&lt;UniversityTeacher&gt;()
+                .HasOne(u =&gt; u.Teacher)
+                .WithMany(c =&gt; c.UniversityTeacher)
+                .HasForeignKey(u =&gt; u.TeacherID);
+            modelBuilder.Entity&lt;UniversityTeacher&gt;()
+                .HasOne(u =&gt; u.University)
+                .WithMany(c =&gt; c.UniversityTeacher)
+                .HasForeignKey(u =&gt; u.UniversityID);
+            modelBuilder.Entity&lt;StudentSubject&gt;()
+                .HasOne(u =&gt; u.Student)
+                .WithMany(c =&gt; c.StudentSubject)
+                .HasForeignKey(u =&gt; u.StudentID);
+            modelBuilder.Entity&lt;StudentSubject&gt;()
+                .HasOne(u =&gt; u.Subject)
+                .WithMany(c =&gt; c.StudentSubject)
+                .HasForeignKey(u =&gt; u.SubjectID);
+            modelBuilder.Entity&lt;StudentSubject&gt;().HasKey(u =&gt; new { u.StudentID, u.SubjectID });
+            modelBuilder.Entity&lt;UniversityTeacher&gt;().HasKey(u =&gt; new { u.TeacherID, u.UniversityID });
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,47,11,51,0],[11,52,11,56,0],[12,35,12,39,0],[12,40,12,44,0],[13,37,13,41,0],[13,42,13,46,0],[14,41,14,45,0],[14,46,14,50,0],[15,55,15,59,0],[15,60,15,64,0],[16,41,16,45,0],[16,46,16,50,0],[17,41,17,45,0],[17,46,17,50,0],[18,61,18,65,0],[18,66,18,70,0],[22,9,22,10,0],[23,13,24,98,0],[25,13,25,45,0],[25,45,25,69,0],[25,69,25,114,0],[26,9,26,10,0],[29,9,29,10,0],[30,13,30,75,0],[31,13,31,63,0],[32,13,32,65,0],[33,13,33,69,0],[34,13,34,69,0],[35,13,35,69,0],[36,13,39,47,0],[40,13,43,53,0],[44,13,47,47,0],[48,13,51,48,0],[52,13,55,50,0],[56,13,59,50,0],[60,13,63,53,0],[64,13,67,50,0],[68,13,71,50,0],[72,13,72,97,0],[73,13,73,103,0],[74,9,74,10,0]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\BankSystem\CreditDepartment.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+
+namespace BankSystem
+{
+    public static class CreditDepartment
+    {
+        public static CreditCard PermissionToIssueACard(BankAccount _account)
+        {
+            if (_account.Balance &lt;= 200)
+            {
+                return CardIssuance(_account);
+            }
+            else
+            {
+                Console.WriteLine(&quot;Not allowed&quot;);
+                return null;
+            }
+        }
+        public static CreditCard CardIssuance(BankAccount _account)
+        {
+            double _startBalance = 0;
+            int _procent = 0;
+            switch (_account.Account)
+            {
+                case BankAccount.TypeOfAccount.Ordinary:
+                    _procent = 25;
+                    _startBalance = 1000;
+                    break;
+                case BankAccount.TypeOfAccount.Entrepreneur:
+                    _procent = 20;
+                    _startBalance = 2000;
+                    break;
+                case BankAccount.TypeOfAccount.VIP:
+                    _procent = 10;
+                    _startBalance = 5000;
+                    break;
+            }
+
+            return new CreditCard(_startBalance, _procent);
+        }
+        
+        public static bool CloseACredit(CreditCard creditCard)
+        {
+            if (creditCard.Balance &gt;= creditCard.BalanceWithProcent)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[8,9,8,10,0],[9,13,9,41,0],[10,13,10,14,0],[11,17,11,47,0],[14,13,14,14,0],[15,17,15,50,0],[16,17,16,29,0],[18,9,18,10,0],[20,9,20,10,0],[21,13,21,38,0],[22,13,22,30,0],[23,13,23,38,0],[26,21,26,35,0],[27,21,27,42,0],[28,21,28,27,0],[30,21,30,35,0],[31,21,31,42,0],[32,21,32,27,0],[34,21,34,35,0],[35,21,35,42,0],[36,21,36,27,0],[39,13,39,60,0],[40,9,40,10,0],[43,9,43,10,0],[44,13,44,69,0],[45,13,45,14,0],[46,17,46,29,0],[48,13,48,26,0],[49,9,49,10,0]]);
+    </script>
+  </body>
+</html>

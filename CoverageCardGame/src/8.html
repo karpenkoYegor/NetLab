@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>D:\C#\LeverXNetLab\EntityHomeworkLab8\Student.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace UniversityDb
+{
+    public class Student
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StudentID { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public DateTime Birthday { get; set; }
+        public int Bursary { get; set; }
+        public int? Bonus { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int? CityID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int GroupID { get; set; }
+
+        public City City { get; set; }
+
+        public Group Group { get; set; }
+        public List&lt;StudentSubject&gt; StudentSubject { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,32,11,36,0],[11,37,11,41,0],[13,30,13,34,0],[13,35,13,39,0],[15,36,15,40,0],[15,41,15,45,0],[16,30,16,34,0],[16,35,16,39,0],[17,29,17,33,0],[17,34,17,38,0],[19,30,19,34,0],[19,35,19,39,0],[21,30,21,34,0],[21,35,21,39,0],[23,28,23,32,0],[23,33,23,37,0],[25,30,25,34,0],[25,35,25,39,0],[26,54,26,58,0],[26,59,26,63,0]]);
+    </script>
+  </body>
+</html>
